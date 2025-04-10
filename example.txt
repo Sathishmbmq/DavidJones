@@ -1,1 +1,1 @@
-This is an example of Git and GitHub repositories
+This is an example of Git and GitHub repository
