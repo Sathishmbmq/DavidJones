@@ -39,7 +39,7 @@ pipeline {
                 bat 'docker build -t myapp1:latest .'
 
                 echo 'Running Docker container'
-                bat 'docker run -d -p 9090:8080 --name myapp_container1 myapp1:latest'
+                bat 'docker run -d -p 9090:8080 --name myapp_container2 myapp1:latest'
             }
         }
     }
