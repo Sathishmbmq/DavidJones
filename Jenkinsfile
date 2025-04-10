@@ -1,21 +1,45 @@
 pipeline {
     agent any
+
     stages {
-        stage('Build') {
+        stage('SCM') {
             steps {
-                // Get some code from a GitHub repository
-                git 'https://github.com/Sathishmbmq/DavidJones.git'
-
-                // To run Maven on a Windows agent, use
-                // bat "mvn -Dmaven.test.failure.ignore=true clean package"
+                echo 'Fetching the code'
+                git changelog: false, poll: false, url: 'https://github.com/Sathishmbmq/DavidJones.git'
             }
+        }
 
-            post {
-                // If Maven was able to run the tests, even if some of the test
-                // failed, record the test results and archive the jar file.
-                success {
-                    echo "build sucess"
-                }
+        stage('BUILD') {
+            steps {
+                echo 'Building the project'
+               // bat 'mvn clean install'
+            }
+        }
+
+        stage('TEST') {
+            steps {
+                echo 'Testing the project'
+               // bat 'mvn test'
+            }
+        }
+
+        stage('VERIFY DOCKERFILE') {
+            steps {
+                echo 'Verifying Dockerfile presence'
+                bat 'dir Dockerfile'
+            }
+        }
+
+        stage('DEPLOY') {
+            steps {
+                echo 'Checking Docker version'
+                bat 'docker --version'
+
+                echo 'Building Docker image'
+                bat 'docker build -t myapp1:latest .'
+
+                echo 'Running Docker container'
+                bat 'docker run -d -p 9090:8080 --name myapp_container1 myapp1:latest'
             }
         }
     }
