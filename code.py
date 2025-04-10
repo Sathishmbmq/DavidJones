@@ -1,1 +1,1 @@
-print("Sathish Kaki + Entry Course")
+print("Sathish Kaki + Entry Course with GitHub")
